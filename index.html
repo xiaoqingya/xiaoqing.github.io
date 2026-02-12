@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炸制教程展示页</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        /* 密码验证容器 */
+        .password-box {
+            max-width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .password-box h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .pwd-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            outline: none;
+        }
+        .pwd-input:focus {
+            border-color: #007bff;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        /* 视频列表容器（默认隐藏） */
+        .video-box {
+            max-width: 600px;
+            margin: 0 auto;
+            display: none;
+        }
+        .video-title {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+            font-size: 24px;
+        }
+        /* 单个视频卡片 */
+        .video-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            padding: 15px;
+        }
+        .card-title {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        /* 内嵌视频样式 */
+        .video-player {
+            width: 100%;
+            height: 220px;
+            outline: none;
+            border-radius: 5px;
+        }
+        /* 响应式适配 */
+        @media (max-width: 480px) {
+            .video-player {
+                height: 150px;
+            }
+            .video-title {
+                font-size: 20px;
+            }
+            .card-title {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 密码验证区域 -->
+    <div class="password-box" id="passwordBox">
+        <h2>请输入访问密码</h2>
+        <input type="password" class="pwd-input" id="pwdInput" placeholder="默认密码">
+        <button class="submit-btn" onclick="verifyPassword()">确认访问</button>
+    </div>
+
+    <!-- 视频列表区域 -->
+    <div class="video-box" id="videoBox">
+        <h1 class="video-title">炸制教程展示列表</h1>
+        
+        <!-- 视频1：炸制 -->
+        <div class="video-card">
+            <div class="card-title">炸制</div>
+            <video id="video1" class="video-player" controls preload="metadata">
+                <source src="video1.mp4" type="video/mp4">
+                你的浏览器不支持HTML5视频播放
+            </video>
+        </div>
+
+        <!-- 视频2：汉堡制作教程 -->
+        <div class="video-card">
+            <div class="card-title">汉堡制作教程</div>
+            <video id="video2" class="video-player" controls preload="metadata">
+                <source src="video2.mp4" type="video/mp4">
+                你的浏览器不支持HTML5视频播放
+            </video>
+        </div>
+
+        <!-- 视频3：整鸡炸制 -->
+        <div class="video-card">
+            <div class="card-title">整鸡炸制</div>
+            <video id="video3" class="video-player" controls preload="metadata">
+                <source src="video3.mp4" type="video/mp4">
+                你的浏览器不支持HTML5视频播放
+            </video>
+        </div>
+
+        <!-- 视频4：无骨肉炸制 -->
+        <div class="video-card">
+            <div class="card-title">无骨肉炸制</div>
+            <video id="video4" class="video-player" controls preload="metadata">
+                <source src="video4.mp4" type="video/mp4">
+                你的浏览器不支持HTML5视频播放
+            </video>
+        </div>
+
+        <!-- 视频5：大鸡腿炸制 -->
+        <div class="video-card">
+            <div class="card-title">大鸡腿炸制</div>
+            <video id="video5" class="video-player" controls preload="metadata">
+                <source src="video5.mp4" type="video/mp4">
+                你的浏览器不支持HTML5视频播放
+            </video>
+        </div>
+
+        <!-- 视频6：打包流程 -->
+        <div class="video-card">
+            <div class="card-title">打包流程</div>
+            <video id="video6" class="video-player" controls preload="metadata">
+                <source src="video6.mp4" type="video/mp4">
+                你的浏览器不支持HTML5视频播放
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // 核心配置（仅需改这里）
+        const PASSWORD = "123456"; // 可修改为你的密码
+
+        // 密码验证核心函数
+        function verifyPassword() {
+            const inputVal = document.getElementById("pwdInput").value.trim();
+            if (inputVal === PASSWORD) {
+                document.getElementById("passwordBox").style.display = "none";
+                document.getElementById("videoBox").style.display = "block";
+            } else {
+                alert("密码错误！请重新输入");
+                document.getElementById("pwdInput").value = "";
+            }
+        }
+
+        // 回车键验证密码
+        document.getElementById("pwdInput").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") verifyPassword();
+        });
+    </script>
+</body>
+</html>
